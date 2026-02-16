@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/BuildConnect.iml" filepath="$PROJECT_DIR$/.idea/BuildConnect.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../Django_Basics_January_2026/18_Exercise_Class_Based_Views_Basic/exercise_cbvs_basics/.idea/exercise_cbvs_basics.iml" filepath="$PROJECT_DIR$/../../Django_Basics_January_2026/18_Exercise_Class_Based_Views_Basic/exercise_cbvs_basics/.idea/exercise_cbvs_basics.iml" />
+    </modules>
+  </component>
+</project>
