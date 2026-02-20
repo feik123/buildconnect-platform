@@ -1,0 +1,14 @@
+<h1>Contractors</h1>
+
+<ul>
+    {% for contractor in contractors %}
+        <li>
+            <a href="{% url 'contractors:detail' contractor.pk %}">
+                {{ contractor.name }}
+            </a>
+            - {{ contractor.city.name }}
+        </li>
+    {% empty %}
+        <li>No contractors found.</li>
+    {% endfor %}
+</ul>

@@ -1,14 +1,13 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from BuildConnect.asgi import application
 from applications.models import Application
 
 
 class ApplicationBaseForm(forms.ModelForm):
     class Meta:
         model = Application
-        fields = ['job', 'contractor', 'message',]
+        fields = ['contractor', 'message', 'price_quote',]
 
         widgets = {
             'message': forms.Textarea(attrs={'rows': 4}),
@@ -17,7 +16,8 @@ class ApplicationBaseForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['job'].empty_label = 'Select job'
+        self.fields['price_quote'].help_text = 'Enter approximate budget in Euro.'
+
         self.fields['contractor'].empty_label = 'Select contractor'
 
         self.fields['message'].widget.attrs['placeholder'] = 'Describe why you are suitable for this job...'

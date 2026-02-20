@@ -1,0 +1,36 @@
+<h1>{{ job.title }}</h1>
+
+<p>{{ job.description }}</p>
+
+<p>City: {{ job.city.name }}</p>
+
+<p>Category: {{ job.category.name }}</p>
+
+<p>Budget: {{ job.budget }}</p>
+
+<p>Status: {{ job.status }}</p>
+
+<p>Created at: {{ job.created_at }}</p>
+
+
+<a href="{% url 'applications:create' job.pk %}">
+    Apply for this job
+</a>
+
+
+<hr>
+
+<h2>Applications</h2>
+
+<ul>
+    {% for application in job.applications.all %}
+        <li>
+            {{ application.contractor.name }}
+            - {{ application.created_at }}
+        </li>
+    {% empty %}
+        <li>No applications yet.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'jobs:list' %}">Back</a>

@@ -1,0 +1,20 @@
+<h1>{{ contractor.name }}</h1>
+<p>{{ contractor.description }}</p>
+<p>City: {{ contractor.city.name }}</p>
+<p>Experience: {{ contractor.years_experience }} years</p>
+
+<h2>Skills:</h2>
+<ul>
+    {% for skill in contractor.skills.all %}
+        <li>{{ skill.name }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Applications:</h2>
+<ul>
+    {% for app in contractor.applications.all %}
+        <li>{{ app.job.title }} - {{ app.created_at }}</li>
+    {% empty %}
+        <li>No applications yet.</li>
+    {% endfor %}
+</ul>

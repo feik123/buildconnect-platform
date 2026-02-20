@@ -13,11 +13,17 @@ class JobBaseForm(forms.ModelForm):
         widgets = {
             'description': forms.Textarea()
         }
+        error_messages = {
+            'title': {
+                'required': 'Please enter job title.'
+            }
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['title'].widget.attrs['placeholder'] = 'Describe the job in detail...'
+        self.fields['title'].widget.attrs['placeholder'] = 'Job title'
+        self.fields['description'].widget.attrs['placeholder'] = 'Describe the job in detail...'
         self.fields['category'].empty_label = 'Select category'
         self.fields['city'].empty_label = 'Select city'
         self.fields['budget'].widget.attrs['placeholder'] = 'e.g. 2000'
@@ -25,7 +31,7 @@ class JobBaseForm(forms.ModelForm):
     def clean_budget(self):
         budget = self.cleaned_data.get('budget')
 
-        if budget < 0:
+        if budget is not None and  budget < 0:
            raise ValidationError('Budget cannot be negative.')
 
         return budget

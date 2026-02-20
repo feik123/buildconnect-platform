@@ -55,14 +55,18 @@ class ContractorEditForm(ContractorBaseForm):
 
 
 class ContractorDeleteForm(ContractorBaseForm):
+    # Todo add disable fields Mixin
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         for field in self.fields.values():
             field.disabled = True
 
+    def clean(self):
+        return self.cleaned_data
+
     def save(self, commit=True):
         if commit:
             self.instance.delete()
-
         return self.instance

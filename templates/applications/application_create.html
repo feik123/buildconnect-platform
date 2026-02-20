@@ -1,0 +1,12 @@
+<h1>Apply for Job</h1>
+<h2>{{job.title}}</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Submit application</button>
+</form>
+
+<a href="{% url 'jobs:detail' job.pk %}">Cancel</a>

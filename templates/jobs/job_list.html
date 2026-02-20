@@ -1,0 +1,9 @@
+<h1>Jobs</h1>
+
+<ul>
+    {% for job in jobs %}
+        <li>
+            {{ job.title }} - {{ job.city.name }}
+        </li>
+    {% endfor %}
+</ul>
