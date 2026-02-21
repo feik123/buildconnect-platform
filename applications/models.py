@@ -4,6 +4,8 @@ from common.models import TimeStampModel
 
 
 class Application(TimeStampModel):
+
+
     class ApplicationChoices(models.TextChoices):
         PENDING = 'pending', 'Pending'
         ACCEPTED = 'accepted', 'Accepted'

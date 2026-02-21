@@ -58,8 +58,4 @@ class ContractorDeleteView(DeleteView):
         return kwargs
 
 
-    def form_valid(self, form):
-        form.save()
-        return redirect(self.success_url)
-
 

@@ -12,6 +12,9 @@
 
 <p>Created at: {{ job.created_at }}</p>
 
+<a href="{% url 'jobs:edit' job.pk %}">Edit</a>
+<a href="{% url 'jobs:delete' job.pk %}">Delete</a>
+
 
 <a href="{% url 'applications:create' job.pk %}">
     Apply for this job
@@ -25,8 +28,14 @@
 <ul>
     {% for application in job.applications.all %}
         <li>
-            {{ application.contractor.name }}
-            - {{ application.created_at }}
+            <strong>{{ application.contractor.name }}</strong>
+            <br>
+            Message: {{ application.message }}
+            <br>
+            Quote: €{{ application.price_quote }}
+            <br>
+            Applied on: {{ application.created_at }}
+            <hr>
         </li>
     {% empty %}
         <li>No applications yet.</li>

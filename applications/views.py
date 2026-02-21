@@ -1,4 +1,3 @@
-from idlelib.debugobj import dispatch
 
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -18,14 +17,20 @@ class ApplicationCreateView(CreateView):
         self.job = get_object_or_404(Job, pk=self.kwargs['pk'])
         return super().dispatch(request, *args, **kwargs)
 
-    def form_valid(self, form):
-        form.instance.job = self.job
-        return super().form_valid(form)
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['job'] = self.job
+        return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['job'] = self.job
         return context
+
+    def form_valid(self, form):
+        form.instance.job = self.job
+        return super().form_valid(form)
+
 
     def get_success_url(self):
         return reverse_lazy('jobs:detail', kwargs={'pk': self.job.pk})

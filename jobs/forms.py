@@ -3,6 +3,7 @@ from dataclasses import fields
 from django import forms
 from django.core.exceptions import ValidationError
 
+from common.mixins import DisableFormFieldsMixin
 from jobs.models import Job
 
 
@@ -45,12 +46,7 @@ class JobEditForm(JobBaseForm):
     pass
 
 
-class JobDeleteForm(JobBaseForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        for field in self.fields.values():
-            field.disabled = True
+class JobDeleteForm(DisableFormFieldsMixin ,JobBaseForm):
 
     def save(self, commit=True):
         if commit:

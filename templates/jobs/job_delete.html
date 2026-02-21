@@ -1,0 +1,13 @@
+<h1>Delete Job</h1>
+
+<p>Are you sure you want to delete "{{ job.description }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>Confirm Delete</button>
+
+    <a href="{% url 'jobs:detail' object.pk %}">
+        Cancel
+    </a>
+</form>

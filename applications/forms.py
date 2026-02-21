@@ -25,20 +25,24 @@ class ApplicationBaseForm(forms.ModelForm):
 
 class ApplicationCreateForm(ApplicationBaseForm):
 
+    def __init__(self, *args, **kwargs):
+        self.job = kwargs.pop('job', None)
+        super().__init__(*args, **kwargs)
+
     def clean(self):
         cleaned_data = super().clean()
 
-        job = cleaned_data.get('job')
+
         contractor = cleaned_data.get('contractor')
 
-        if not job and not contractor:
+        if not self.job or not contractor:
             return cleaned_data
 
-        if job.status != job.StatusChoices.OPEN:
+        if self.job.status != self.job.StatusChoices.OPEN:
             raise ValidationError('Cannot apply to a closed job.')
 
         already_applied = Application.objects.filter(
-            job=job,
+            job=self.job,
             contractor=contractor,
         ).exists()
 

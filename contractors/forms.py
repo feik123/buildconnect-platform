@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
+from common.mixins import DisableFormFieldsMixin
 from contractors.models import Contractor
 
 
@@ -54,14 +55,7 @@ class ContractorEditForm(ContractorBaseForm):
     pass
 
 
-class ContractorDeleteForm(ContractorBaseForm):
-    # Todo add disable fields Mixin
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        for field in self.fields.values():
-            field.disabled = True
+class ContractorDeleteForm(DisableFormFieldsMixin, ContractorBaseForm):
 
     def clean(self):
         return self.cleaned_data

@@ -1,9 +1,28 @@
 <h1>Jobs</h1>
 
+<form method="get">
+    <input type="text" name="q" placeholder="Search jobs..." value="{{ request.GET.q }}">
+    <button>Search</button>
+</form>
+
 <ul>
     {% for job in jobs %}
         <li>
             {{ job.title }} - {{ job.city.name }}
         </li>
+    {% empty %}
+        <li>No jobs found</li>
     {% endfor %}
 </ul>
+
+{% if is_paginated %}
+<div>
+    {% if page_obj.has_previous %}
+        <a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    {% if page_obj.has_next %}
+        <a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}">Next</a>
+    {% endif %}
+</div>
+{% endif %}
