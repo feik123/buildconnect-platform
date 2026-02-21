@@ -1,3 +1,5 @@
+{% load status_badge %}
+
 <h1>{{ job.title }}</h1>
 
 <p>{{ job.description }}</p>
@@ -27,6 +29,7 @@
 
 <ul>
     {% for application in job.applications.all %}
+        
         <li>
             <strong>{{ application.contractor.name }}</strong>
             <br>
@@ -35,6 +38,15 @@
             Quote: €{{ application.price_quote }}
             <br>
             Applied on: {{ application.created_at }}
+            <br>
+            Status: {{ application.status|status_badge }}
+            <br><br>
+            {% if application.status == "pending" %}
+                <a href="{% url 'applications:accept' application.pk %}"
+                   class="btn btn-success">
+                   Accept
+                </a>
+            {% endif %}
             <hr>
         </li>
     {% empty %}

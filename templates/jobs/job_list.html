@@ -1,3 +1,4 @@
+{% load is_open %}
 <h1>Jobs</h1>
 
 <form method="get">
@@ -9,6 +10,13 @@
     {% for job in jobs %}
         <li>
             {{ job.title }} - {{ job.city.name }}
+            {% if job.is_open %}
+                <span style="color: green;">(Open)</span>
+             - <a href="{% url 'jobs:detail' job.pk %}">View details</a>
+                
+            {% else %}
+                <span style="color: red;">(Closed)</span>
+            {% endif %}
         </li>
     {% empty %}
         <li>No jobs found</li>

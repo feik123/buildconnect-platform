@@ -1,5 +1,5 @@
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
@@ -34,3 +34,17 @@ class ApplicationCreateView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('jobs:detail', kwargs={'pk': self.job.pk})
+
+
+def accept_application(request, pk):
+    application = get_object_or_404(Application, pk=pk)
+
+    application.status = Application.ApplicationChoices.ACCEPTED
+    application.save()
+
+    job = application.job
+    job.status = job.StatusChoices.CLOSE
+    job.save()
+
+    return redirect('jobs:detail', pk=application.job.pk)
+

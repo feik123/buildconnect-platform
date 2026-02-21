@@ -1,4 +1,3 @@
-from dataclasses import fields
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -11,12 +10,17 @@ class JobBaseForm(forms.ModelForm):
     class Meta:
         model = Job
         fields = ['title', 'description', 'category', 'city', 'budget', 'status']
+        labels = {
+            'title': 'Job Title',
+            'description': 'Describe the job',
+            'budget': 'Budget (EUR)',
+        }
         widgets = {
             'description': forms.Textarea()
         }
         error_messages = {
             'title': {
-                'required': 'Please enter job title.'
+                'required': 'Please enter job title.',
             }
         }
 
