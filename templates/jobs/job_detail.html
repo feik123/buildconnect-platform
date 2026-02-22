@@ -1,4 +1,9 @@
+{% extends 'common/base.html' %}
+
+{% block title %}{{ job.title }}{% endblock %}
+{% block content %}
 {% load status_badge %}
+
 
 <h1>{{ job.title }}</h1>
 
@@ -55,3 +60,5 @@
 </ul>
 
 <a href="{% url 'jobs:list' %}">Back</a>
+
+{% endblock %}

@@ -1,3 +1,8 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Contractor Details{% endblock %}
+{% block content %}
+
 <h1>{{ contractor.name }}</h1>
 <p>{{ contractor.description }}</p>
 <p>City: {{ contractor.city.name }}</p>
@@ -18,3 +23,9 @@
         <li>No applications yet.</li>
     {% endfor %}
 </ul>
+
+<a href="{% url 'contractors:edit' contractor.pk %}">Edit Contractor</a>
+<a href="{% url 'contractors:delete' contractor.pk %}">Delete Contractor</a>
+<a href="{% url 'contractors:list' %}">Back to contractors</a>
+
+{% endblock %}

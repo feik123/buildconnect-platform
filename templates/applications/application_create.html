@@ -1,3 +1,8 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Apply for {{ job.title }}{% endblock %}
+{% block content %}
+
 <h1>Apply for Job</h1>
 <h2>{{job.title}}</h2>
 
@@ -10,3 +15,5 @@
 </form>
 
 <a href="{% url 'jobs:detail' job.pk %}">Cancel</a>
+
+{% endblock %}

@@ -1,3 +1,8 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Edit Contractor{% endblock %}
+{% block content %}
+
 <h1>Edit Contractor</h1>
 
 <form method="post">
@@ -7,3 +12,5 @@
     <button type="submit">Save</button>
     <a href="{% url 'contractors:detail' contractor.pk %}">Cancel</a>
 </form>
+
+{% endblock %}

@@ -74,6 +74,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'BuildConnect.wsgi.application'
 
 
