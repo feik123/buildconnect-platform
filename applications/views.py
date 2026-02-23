@@ -46,5 +46,13 @@ def accept_application(request, pk):
     job.status = job.StatusChoices.CLOSE
     job.save()
 
+    return redirect('jobs:detail', pk=job.pk)
+
+def reject_application(request, pk):
+    application = get_object_or_404(Application, pk=pk)
+
+    application.status = Application.ApplicationChoices.REJECTED
+    application.save()
+
     return redirect('jobs:detail', pk=application.job.pk)
 

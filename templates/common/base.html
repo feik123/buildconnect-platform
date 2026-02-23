@@ -12,46 +12,8 @@
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
+{% include 'common/navbar.html' %}
 
-        <a class="navbar-brand" href="{% url 'jobs:list' %}">
-            BuildConnect
-        </a>
-
-        <button class="navbar-toggler" type="button" 
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-
-            <ul class="navbar-nav ms-auto">
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'jobs:list' %}">
-                        Jobs
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contractors:list' %}">
-                        Contractors
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'jobs:create' %}">
-                        Post Job
-                    </a>
-                </li>
-
-            </ul>
-
-        </div>
-    </div>
-</nav>
 
 
 <!-- MAIN CONTENT -->
@@ -64,13 +26,7 @@
 
 
 <!-- FOOTER -->
-<footer class="bg-light text-center py-3 mt-5 border-top">
-
-    <p class="mb-0 text-muted">
-        © 2026 BuildConnect | Django Project
-    </p>
-
-</footer>
+{% include 'common/footer.html' %}
 
 
 <!-- Bootstrap JS -->

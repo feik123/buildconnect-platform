@@ -43,7 +43,8 @@ class JobBaseForm(forms.ModelForm):
 
 
 class JobCreateForm(JobBaseForm):
-    pass
+    class Meta(JobBaseForm.Meta):
+        exclude = ['status']
 
 
 class JobEditForm(JobBaseForm):

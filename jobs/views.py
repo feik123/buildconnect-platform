@@ -1,9 +1,10 @@
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
+from django.template.context_processors import request
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
-from jobs.forms import JobCreateForm, JobDeleteForm
+from jobs.forms import JobCreateForm, JobDeleteForm, JobEditForm
 from jobs.models import Job
 
 
@@ -62,7 +63,7 @@ class JobDetailView(DetailView):
 
 class JobUpdateView(UpdateView):
     model = Job
-    form_class = JobCreateForm
+    form_class = JobEditForm
     template_name = 'jobs/job_edit.html'
     success_url = reverse_lazy('jobs:list')
 

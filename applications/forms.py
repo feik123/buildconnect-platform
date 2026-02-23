@@ -38,7 +38,7 @@ class ApplicationCreateForm(ApplicationBaseForm):
         if not self.job or not contractor:
             return cleaned_data
 
-        if self.job.status != self.job.StatusChoices.OPEN:
+        if not self.job.is_open():
             raise ValidationError('Cannot apply to a closed job.')
 
         already_applied = Application.objects.filter(

@@ -1,8 +1,8 @@
 {% extends 'common/base.html' %}
+{% load status_badge %}
 
 {% block title %}{{ job.title }}{% endblock %}
 {% block content %}
-{% load status_badge %}
 
 
 <h1>{{ job.title }}</h1>
@@ -34,7 +34,7 @@
 
 <ul>
     {% for application in job.applications.all %}
-        
+
         <li>
             <strong>{{ application.contractor.name }}</strong>
             <br>
@@ -46,11 +46,19 @@
             <br>
             Status: {{ application.status|status_badge }}
             <br><br>
-            {% if application.status == "pending" %}
+            {% if application.status == "pending" and job.is_open%}
                 <a href="{% url 'applications:accept' application.pk %}"
-                   class="btn btn-success">
+                   class="btn btn-success btn-sm me-2">
                    Accept
                 </a>
+                <a href="{% url 'applications:reject' application.pk %}"
+                   class="btn btn-danger btn-sm">
+                   Reject
+                </a>
+            {% else %}
+            <span class="text-muted">
+                Decision already made
+            </span>
             {% endif %}
             <hr>
         </li>

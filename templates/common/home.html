@@ -1,0 +1,86 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Home | BuildConnect{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<div class="bg-light p-5 rounded mb-4 text-center">
+
+    <h1>Find the Right Contractor for Your Project</h1>
+
+    <p class="lead">
+        Connect with experienced professionals in your city.
+    </p>
+
+    <a href="{% url 'jobs:list' %}" class="btn btn-primary me-2">
+        Browse Jobs
+    </a>
+
+    <a href="{% url 'jobs:create' %}" class="btn btn-success">
+        Post a Job
+    </a>
+
+</div>
+
+<!-- LATEST JOBS -->
+<h3>Latest Jobs</h3>
+
+<div class="row mb-4">
+
+{% for job in latest_jobs %}
+    <div class="col-md-4">
+
+        <div class="card mb-3">
+            <div class="card-body">
+
+                <h5>{{ job.title }}</h5>
+
+                <p class="text-muted">
+                    {{ job.city.name }} | {{ job.category.name }}
+                </p>
+
+                <a href="{% url 'jobs:detail' job.pk %}"
+                   class="btn btn-sm btn-outline-primary">
+                    View
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+{% empty %}
+<p>No jobs available.</p>
+{% endfor %}
+
+</div>
+
+<!-- TOP CONTRACTORS -->
+<h3>Top Contractors</h3>
+
+<div class="row">
+
+{% for contractor in top_contractors %}
+    <div class="col-md-4">
+
+        <div class="card mb-3 border-success">
+            <div class="card-body">
+
+                <h5>{{ contractor.name }}</h5>
+
+                <p>{{ contractor.years_experience }} years experience</p>
+
+                <a href="{% url 'contractors:detail' contractor.pk %}"
+                   class="btn btn-sm btn-outline-success">
+                    Profile
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+{% endfor %}
+
+</div>
+
+{% endblock %}
