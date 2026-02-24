@@ -2,71 +2,190 @@
 {% load status_badge %}
 
 {% block title %}{{ job.title }}{% endblock %}
+
 {% block content %}
 
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-6">
 
-<h1>{{ job.title }}</h1>
-
-<p>{{ job.description }}</p>
-
-<p>City: {{ job.city.name }}</p>
-
-<p>Category: {{ job.category.name }}</p>
-
-<p>Budget: {{ job.budget }}</p>
-
-<p>Status: {{ job.status }}</p>
-
-<p>Created at: {{ job.created_at }}</p>
-
-<a href="{% url 'jobs:edit' job.pk %}">Edit</a>
-<a href="{% url 'jobs:delete' job.pk %}">Delete</a>
-
-
-<a href="{% url 'applications:create' job.pk %}">
-    Apply for this job
-</a>
-
-
-<hr>
-
-<h2>Applications</h2>
-
-<ul>
-    {% for application in job.applications.all %}
-
-        <li>
-            <strong>{{ application.contractor.name }}</strong>
-            <br>
-            Message: {{ application.message }}
-            <br>
-            Quote: €{{ application.price_quote }}
-            <br>
-            Applied on: {{ application.created_at }}
-            <br>
-            Status: {{ application.status|status_badge }}
-            <br><br>
-            {% if application.status == "pending" and job.is_open%}
-                <a href="{% url 'applications:accept' application.pk %}"
-                   class="btn btn-success btn-sm me-2">
-                   Accept
+        <!-- HEADER -->
+        <div class="mb-4">
+        
+            <h2 class="fw-semibold mb-1">
+                {{ job.title }}
+            </h2>
+        
+            <p class="text-muted mb-0">
+                {{ job.city.name }} |
+                {{ job.category.name }}
+            </p>
+        
+        </div>
+        
+        
+        <!-- JOB INFO -->
+        <div class="card shadow-sm mb-4 border-0">
+        
+            <div class="card-body">
+        
+                <p class="mb-3">
+                    {{ job.description }}
+                </p>
+        
+                <div class="row small text-muted">
+        
+                    <div class="col-md-3">
+                         Budget:<br>
+                        {% if job.budget %}
+                            €{{ job.budget }}
+                        {% else %}
+                            Not specified
+                        {% endif %}
+                    </div>
+        
+                    <div class="col-md-3">
+                         Posted:<br>
+                        {{ job.created_at|date:"M d, Y" }}
+                    </div>
+        
+                    <div class="col-md-3">
+                         Status:<br>
+                        {{ job.status|status_badge }}
+                    </div>
+        
+                </div>
+        
+            </div>
+        
+        </div>
+        
+        
+        <!-- ACTIONS -->
+        <div class="mb-4 d-flex gap-2">
+        
+            <a href="{% url 'jobs:edit' job.pk %}"
+               class="btn btn-outline-secondary btn-sm">
+        
+                Edit
+            </a>
+        
+            <a href="{% url 'jobs:delete' job.pk %}"
+               class="btn btn-outline-danger btn-sm">
+        
+                Delete
+            </a>
+        
+            {% if job.is_open %}
+        
+                <a href="{% url 'applications:create' job.pk %}"
+                   class="btn btn-primary btn-sm ms-sm">
+        
+                    Apply
                 </a>
-                <a href="{% url 'applications:reject' application.pk %}"
-                   class="btn btn-danger btn-sm">
-                   Reject
-                </a>
-            {% else %}
-            <span class="text-muted">
-                Decision already made
-            </span>
+        
             {% endif %}
-            <hr>
-        </li>
-    {% empty %}
-        <li>No applications yet.</li>
-    {% endfor %}
-</ul>
-
-<a href="{% url 'jobs:list' %}">Back</a>
-
+        
+        </div>
+        
+        
+        <!-- APPLICATIONS -->
+        <h4 class="mb-3">Applications</h4>
+        
+        
+        {% for application in job.applications.all %}
+        
+        <div class="card mb-3 border-0 shadow-sm">
+        
+            <div class="card-body">
+        
+                <div class="d-flex justify-content-between">
+        
+                    <div>
+        
+                        <h6 class="mb-1 fw-semibold">
+                            {{ application.contractor.name }}
+                        </h6>
+        
+                        <p class="small text-muted mb-1">
+                            {{ application.contractor.years_experience }} years of experience
+                        </p>
+        
+                        <p class="small mb-1">
+                            Price quote: €{{ application.price_quote }}
+                        </p>
+        
+                        <p class="small text-muted mb-2">
+                            Created at: {{ application.created_at|date:"M d, Y" }}
+                        </p>
+        
+                    </div>
+        
+                    <div class="text-end">
+        
+                        <span class="badge mb-2">
+                            {{ application.status|status_badge }}
+                        </span>
+        
+                    </div>
+        
+                </div>
+        
+        
+                <p class="small mb-3 text-muted">
+                    "{{ application.message }}"
+                </p>
+        
+        
+                <!-- ACTIONS -->
+                {% if application.status == "pending" and job.is_open %}
+        
+                <div>
+        
+                    <a href="{% url 'applications:accept' application.pk %}"
+                       class="btn btn-success btn-sm me-2">
+        
+                        ✔ Accept
+                    </a>
+        
+                    <a href="{% url 'applications:reject' application.pk %}"
+                       class="btn btn-danger btn-sm">
+        
+                        ✖ Reject
+                    </a>
+        
+                </div>
+        
+                {% else %}
+        
+                <span class="small text-muted">
+                    Status: Decision already made
+                </span>
+        
+                {% endif %}
+        
+            </div>
+        
+        </div>
+        
+        {% empty %}
+        
+        <div class="alert alert-light text-center">
+            No applications yet.
+        </div>
+        
+        {% endfor %}
+        
+        
+        <!-- BACK -->
+        <div class="mt-4">
+        
+            <a href="{% url 'jobs:list' %}"
+               class="btn btn-link text-decoration-none">
+        
+                ← Back to Jobs
+            </a>
+        
+        </div>
+    </div>
+</div>
 {% endblock %}

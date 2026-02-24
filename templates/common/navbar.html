@@ -1,50 +1,87 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
+
     <div class="container">
 
-        <a class="navbar-brand" href="{% url 'common:home' %}">
-            BuildConnect
+        <!-- LOGO -->
+        <a class="navbar-brand fw-bold text-primary"
+           href="{% url 'common:home' %}">
+
+            🏗 BuildConnect
         </a>
 
-        <button class="navbar-toggler" type="button" 
+        <!-- MOBILE TOGGLE -->
+        <button class="navbar-toggler"
+                type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#navbarNav">
+
             <span class="navbar-toggler-icon"></span>
         </button>
 
+        <!-- MENU -->
         <div class="collapse navbar-collapse" id="navbarNav">
 
-            <ul class="navbar-nav ms-auto">
+            <!-- LEFT -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'common:home' %}">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active fw-semibold{% endif %}"
+                       href="{% url 'common:home' %}">
                         Home
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'jobs:list' %}">
+                    <a class="nav-link {% if request.resolver_match.namespace == 'jobs' and request.resolver_match.url_name == 'list' %}active fw-semibold{% endif %}"
+                       href="{% url 'jobs:list' %}">
                         Jobs
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contractors:list' %}">
+                    <a class="nav-link {% if request.resolver_match.namespace == 'contractors' %}active fw-semibold{% endif %}"
+                       href="{% url 'contractors:list' %}">
                         Contractors
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'jobs:create' %}">
-                        Post Job
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contractors:create' %}">
-                        Create Contractor
-                    </a>
-                </li>
             </ul>
 
+            <!-- SEARCH -->
+            <form class="d-flex me-3"
+                  method="get"
+                  action="{% url 'jobs:list' %}">
+
+                <input class="form-control form-control-sm me-2"
+                       type="search"
+                       name="q"
+                       placeholder="Search jobs...">
+
+                <button class="btn btn-outline-primary btn-sm">
+                    Search
+                </button>
+
+            </form>
+
+            <!-- CTA BUTTONS -->
+            <div class="d-flex gap-2">
+
+                <a href="{% url 'jobs:create' %}"
+                   class="btn btn-primary btn-sm px-3">
+
+                    ➕ Post a new Job
+                </a>
+
+                <a href="{% url 'contractors:create' %}"
+                   class="btn btn-outline-secondary btn-sm px-3">
+
+                    👷 Add Contractor
+                </a>
+
+            </div>
+
         </div>
+
     </div>
+
 </nav>

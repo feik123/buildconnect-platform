@@ -86,6 +86,30 @@ The project includes multiple customized forms with:
 
 ---
 
+## 📸 Screenshots
+
+### Home Page
+![Home](screenshots/home_page.bmp)
+
+### Job Listings
+![Jobs](screenshots/job_list.bmp)
+
+### Job Detail
+![Job Detail](screenshots/job_detail.bmp)
+
+### Contractors
+![Contractors](screenshots/contractor_list.bmp)
+
+### Contractor Profile
+![Contractor Detail](screenshots/contractor_detail.bmp)
+
+### Create Job
+![Create Job](screenshots/job_create.bmp)
+
+### Apply for Job
+![Apply](screenshots/job_apply.bmp)
+
+
 ##  Installation & Setup
 
 Follow these steps to run the project locally:

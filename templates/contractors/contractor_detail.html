@@ -1,31 +1,139 @@
 {% extends 'common/base.html' %}
 
-{% block title %}Contractor Details{% endblock %}
+{% block title %}{{ contractor.name }}{% endblock %}
+
 {% block content %}
 
-<h1>{{ contractor.name }}</h1>
-<p>{{ contractor.description }}</p>
-<p>City: {{ contractor.city.name }}</p>
-<p>Experience: {{ contractor.years_experience }} years</p>
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-6">
 
-<h2>Skills:</h2>
-<ul>
-    {% for skill in contractor.skills.all %}
-        <li>{{ skill.name }}</li>
-    {% endfor %}
-</ul>
+        <!-- HEADER -->
+        <div class="mb-4">
 
-<h2>Applications:</h2>
-<ul>
-    {% for app in contractor.applications.all %}
-        <li>{{ app.job.title }} - {{ app.created_at }}</li>
-    {% empty %}
-        <li>No applications yet.</li>
-    {% endfor %}
-</ul>
+            <h2 class="fw-semibold mb-1">
+                {{ contractor.name }}
+            </h2>
 
-<a href="{% url 'contractors:edit' contractor.pk %}">Edit Contractor</a>
-<a href="{% url 'contractors:delete' contractor.pk %}">Delete Contractor</a>
-<a href="{% url 'contractors:list' %}">Back to contractors</a>
+            <p class="text-muted mb-0">
+                {{ contractor.city.name }}
+            </p>
+
+        </div>
+
+
+        <!-- CONTRACTOR INFO -->
+        <div class="card shadow-sm mb-4 border-0">
+
+            <div class="card-body">
+
+                <p class="mb-3">
+                    {{ contractor.description }}
+                </p>
+
+                <div class="row small text-muted">
+
+                    <div class="col-md-4">
+                        Experience:<br>
+                        {{ contractor.years_experience }} years
+                    </div>
+
+                    <div class="col-md-8">
+                        Skills:<br>
+
+                        {% for skill in contractor.skills.all %}
+
+                            <span class="badge bg-light text-dark border me-1 mb-1">
+                                {{ skill.name }}
+                            </span>
+
+                        {% empty %}
+
+                            Not specified
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+        <div class="mb-4 d-flex gap-2">
+
+            <a href="{% url 'contractors:edit' contractor.pk %}"
+               class="btn btn-outline-secondary btn-sm">
+
+                Edit
+            </a>
+
+            <a href="{% url 'contractors:delete' contractor.pk %}"
+               class="btn btn-outline-danger btn-sm">
+
+                Delete
+            </a>
+
+        </div>
+
+
+        <!-- APPLICATIONS -->
+        <h4 class="mb-3">Applications</h4>
+
+
+        {% for app in contractor.applications.all %}
+
+        <div class="card mb-3 border-0 shadow-sm">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between">
+
+                    <div>
+
+                        <h6 class="mb-1 fw-semibold">
+                            {{ app.job.title }}
+                        </h6>
+
+                        <p class="small text-muted mb-1">
+                            {{ app.job.city.name }}
+                        </p>
+
+                        <p class="small text-muted mb-2">
+                            Applied on: {{ app.created_at|date:"M d, Y" }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="alert alert-light text-center">
+            No applications yet.
+        </div>
+
+        {% endfor %}
+
+
+        <!-- BACK -->
+        <div class="mt-4">
+
+            <a href="{% url 'contractors:list' %}"
+               class="btn btn-link text-decoration-none">
+
+                ← Back to Contractors
+            </a>
+
+        </div>
+
+    </div>
+</div>
 
 {% endblock %}

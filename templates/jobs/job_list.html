@@ -1,41 +1,157 @@
 {% extends 'common/base.html' %}
 
 {% block title %}Jobs{% endblock %}
+
 {% block content %}
-<h1>Jobs</h1>
 
-<form method="get">
-    <input type="text" name="q" placeholder="Search jobs..." value="{{ request.GET.q }}">
-    <button>Search</button>
-</form>
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-9">
 
-<ul>
-    {% for job in jobs %}
-        <li>
-            {{ job.title }} - {{ job.city.name }}
-            {% if job.is_open %}
-                <span style="color: green;">(Open)</span>
-             - <a href="{% url 'jobs:detail' job.pk %}">View details</a>
-                
-            {% else %}
-                <span style="color: red;">(Closed)</span>
-            {% endif %}
-        </li>
-    {% empty %}
-        <li>No jobs found</li>
-    {% endfor %}
-</ul>
 
-{% if is_paginated %}
-<div>
-    {% if page_obj.has_previous %}
-        <a href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}">Previous</a>
-    {% endif %}
-    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-    {% if page_obj.has_next %}
-        <a href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}">Next</a>
-    {% endif %}
+        <!-- HEADER -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h2 class="fw-semibold mb-0">
+                Available Jobs
+            </h2>
+
+            <a href="{% url 'jobs:create' %}"
+               class="btn btn-primary btn-sm">
+
+                Post Job
+            </a>
+
+        </div>
+
+
+        <!-- SEARCH -->
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-body">
+
+                <form method="get" class="row g-2">
+
+                    <div class="col-md-10">
+                        <input type="text"
+                               name="q"
+                               class="form-control"
+                               placeholder="Search jobs..."
+                               value="{{ request.GET.q }}">
+                    </div>
+
+                    <div class="col-md-2 d-grid">
+                        <button class="btn btn-outline-primary">
+                            Search
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- JOB GRID -->
+        <div class="row">
+
+            {% for job in jobs %}
+
+            <div class="col-md-6 col-lg-4 mb-4">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body d-flex flex-column">
+
+                        <h6 class="fw-semibold mb-1">
+                            {{ job.title }}
+                        </h6>
+
+                        <p class="small text-muted mb-2">
+                            {{ job.city.name }} | {{ job.category.name }}
+                        </p>
+
+
+                        {% if job.is_open %}
+                            <span class="badge bg-success mb-2 align-self-start">
+                                Open
+                            </span>
+                        {% else %}
+                            <span class="badge bg-secondary mb-2 align-self-start">
+                                Closed
+                            </span>
+                        {% endif %}
+
+
+                        <p class="small text-muted flex-grow-1">
+                            {{ job.description|truncatechars:90 }}
+                        </p>
+
+
+                        <a href="{% url 'jobs:detail' job.pk %}"
+                           class="btn btn-outline-primary btn-sm mt-auto">
+
+                            View Details
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="col-12">
+                <div class="alert alert-light text-center">
+                    No jobs found.
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- PAGINATION -->
+        {% if is_paginated %}
+
+        <nav class="mt-4">
+
+            <ul class="pagination justify-content-center">
+
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="?q={{ request.GET.q }}&page={{ page_obj.previous_page_number }}">
+                        Previous
+                    </a>
+                </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                    <span class="page-link">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                    </span>
+                </li>
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="?q={{ request.GET.q }}&page={{ page_obj.next_page_number }}">
+                        Next
+                    </a>
+                </li>
+                {% endif %}
+
+            </ul>
+
+        </nav>
+
+        {% endif %}
+
+
+    </div>
 </div>
-{% endif %}
 
 {% endblock %}

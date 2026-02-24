@@ -1,16 +1,78 @@
 {% extends 'common/base.html' %}
 
 {% block title %}Edit Contractor{% endblock %}
+
 {% block content %}
 
-<h1>Edit Contractor</h1>
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-xl-5">
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+        <div class="card shadow-sm border-0">
 
-    <button type="submit">Save</button>
-    <a href="{% url 'contractors:detail' contractor.pk %}">Cancel</a>
-</form>
+            <div class="card-body">
+
+                <h4 class="fw-semibold mb-3">
+                    Edit Contractor
+                </h4>
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+                    {{ form.non_field_errors }}
+
+                    {% for field in form %}
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                {{ field.label }}
+                            </label>
+
+                            {{ field }}
+
+                            {% if field.help_text %}
+                                <div class="form-text">
+                                    {{ field.help_text }}
+                                </div>
+                            {% endif %}
+
+                            {% for error in field.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+                    {% endfor %}
+
+
+                    <!-- BUTTONS -->
+                    <div class="d-flex gap-2 mt-4">
+
+                        <button type="submit"
+                                class="btn btn-primary">
+
+                            Save
+                        </button>
+
+                        <a href="{% url 'contractors:detail' contractor.pk %}"
+                           class="btn btn-outline-secondary">
+
+                            Cancel
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
 
 {% endblock %}
+
