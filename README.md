@@ -21,7 +21,7 @@ This project is developed as part of the Django Basics course at SoftUni.
 ##  Technologies Used
 
 - Python [3.9.13]
-- Django [6.0.2]
+- Django [4.2.27]
 - PostgreSQL
 - Bootstrap 5
 - HTML5 / CSS3
@@ -110,12 +110,55 @@ The project includes multiple customized forms with:
 ![Apply](screenshots/job_apply.bmp)
 
 
-##  Installation & Setup
+## 🚀 Installation & Setup
 
 Follow these steps to run the project locally:
 
-### 1 Clone the repository
+---
+
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/[your-username]/[your-repo-name].git
-cd [your-repo-name]
+git clone https://github.com/feik123/buildconnect-platform.git
+cd buildconnect-platform
+```
+
+### 2. Create a Virtual Environment
+
+```bash
+python -m venv venv
+``` 
+Activate the virtual environment:
+- On Windows:
+```bash 
+venv\Scripts\activate
+```
+- On macOS/Linux:
+```bash 
+source venv/bin/activate
+``` 
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Environment Variables
+
+Create a `.env` file in the project root based on `.env.template`.
+
+Example `.env` for local testing:
+
+SECRET_KEY=django-insecure-buildconnect-local-key  
+DEBUG=True  
+ALLOWED_HOSTS=127.0.0.1,localhost  
+
+# PostgreSQL (optional)
+DB_NAME=buildconnect_db  
+DB_USER=postgres  
+DB_PASSWORD=postgres  
+DB_HOST=localhost  
+DB_PORT=5432  
+
+If PostgreSQL credentials are not provided,
+the application can use SQLite.
