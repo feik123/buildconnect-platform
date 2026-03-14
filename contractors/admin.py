@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from contractors.models import Contractor
+from contractors.models import Contractor, Skill
 
 
 @admin.register(Contractor)
@@ -12,3 +12,5 @@ class ContractorAdmin(admin.ModelAdmin):
     @staticmethod
     def contractor_skills(obj):
         return ', '.join(skill.name for skill in obj.skills.all())
+
+admin.site.register(Skill)
