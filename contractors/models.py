@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 from common.models import TimeStampModel
 
@@ -34,6 +35,9 @@ class Contractor(TimeStampModel):
 
     class Meta:
         ordering = ('name',)
+
+    def get_absolute_url(self):
+        return reverse('contractors:detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.name

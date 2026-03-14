@@ -1,4 +1,6 @@
+
 from django.db import models
+from django.urls import reverse
 
 from common.models import TimeStampModel
 
@@ -70,6 +72,9 @@ class Job(TimeStampModel):
 
     def is_open(self):
         return self.status == self.StatusChoices.OPEN
+
+    def get_absolute_url(self):
+        return reverse('jobs:detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title

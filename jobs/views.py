@@ -1,6 +1,5 @@
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
-from django.template.context_processors import request
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
@@ -36,7 +35,6 @@ class JobCreateView(CreateView):
     model = Job
     form_class = JobCreateForm
     template_name = 'jobs/job_create.html'
-    success_url = reverse_lazy('jobs:list')
 
 
 class JobDetailView(DetailView):

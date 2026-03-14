@@ -1,5 +1,4 @@
-from django.shortcuts import get_object_or_404, redirect
-from django.template.base import kwarg_re
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
@@ -30,7 +29,6 @@ class ContractorCreateView(CreateView):
     model = Contractor
     template_name = 'contractors/contractor_create.html'
     form_class = ContractorCreateForm
-    success_url = reverse_lazy('contractors:list')
 
 
 class ContractorUpdateView(UpdateView):

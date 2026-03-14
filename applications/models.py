@@ -1,4 +1,6 @@
+
 from django.db import models
+from django.urls import reverse
 
 from common.models import TimeStampModel
 
@@ -34,7 +36,15 @@ class Application(TimeStampModel):
 
     class Meta:
         ordering = ('-created_at',)
-        unique_together = ('job', 'contractor')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['job', 'contractor'],
+                name='unique_job_contractor'
+            )
+        ]
+
+    def get_absolute_url(self):
+        return reverse('jobs:detail', kwargs={'pk': self.job.pk})
 
     def __str__(self):
         return f'Application by {self.contractor.name} for {self.job.title}'

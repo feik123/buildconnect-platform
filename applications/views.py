@@ -32,10 +32,6 @@ class ApplicationCreateView(CreateView):
         return super().form_valid(form)
 
 
-    def get_success_url(self):
-        return reverse_lazy('jobs:detail', kwargs={'pk': self.job.pk})
-
-
 def accept_application(request, pk):
     application = get_object_or_404(Application, pk=pk)
 
