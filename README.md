@@ -86,6 +86,12 @@ The project includes multiple customized forms with:
 
 ---
 
+## Admin Configuration
+
+- Reference models such as **Category**, **City**, and **Skill** are registered in the Django admin panel.
+- Administrators can easily manage required data through: /admin
+- This ensures that Jobs and Contractors can always be created.
+
 ## 📸 Screenshots
 
 ### Home Page
