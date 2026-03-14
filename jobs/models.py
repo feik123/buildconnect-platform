@@ -1,6 +1,5 @@
 from django.db import models
 
-from common.choices import CategoryChoices
 from common.models import TimeStampModel
 
 
@@ -21,7 +20,6 @@ class Category(models.Model):
     name = models.CharField(
         max_length=60,
         unique=True,
-        choices=CategoryChoices.choices,
     )
 
     class Meta:
