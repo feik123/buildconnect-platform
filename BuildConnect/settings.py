@@ -42,7 +42,11 @@ PROJECT_APPS = [
     'jobs.apps.JobsConfig',
     'contractors.apps.ContractorsConfig',
     'applications.apps.ApplicationsConfig',
-    'common.apps.CommonConfig'
+    'common.apps.CommonConfig',
+    'accounts',
+    'api',
+    'reviews',
+    'notifications'
 ]
 
 INSTALLED_APPS = [
