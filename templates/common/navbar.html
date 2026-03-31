@@ -63,22 +63,50 @@
 
             </form>
 
-            <!-- CTA BUTTONS -->
-            <div class="d-flex gap-2">
+<div class="d-flex align-items-center gap-2">
 
-                <a href="{% url 'jobs:create' %}"
-                   class="btn btn-primary btn-sm px-3">
+    {% if user.is_authenticated %}
 
-                    ➕ Post a new Job
-                </a>
+            {% if user.profile.is_contractor %}
+        <a href="{% url 'contractors:create' %}" class="btn btn-outline-secondary btn-sm">
+            👷 Manage Profile
+        </a>
+    {% else %}
+        <a href="{% url 'jobs:create' %}" class="btn btn-primary btn-sm">
+            ➕ Post Job
+        </a>
+    {% endif %}
 
-                <a href="{% url 'contractors:create' %}"
-                   class="btn btn-outline-secondary btn-sm px-3">
+        <!-- USER INFO -->
+        <span class="small text-muted ms-2">
+             {{ user.username }}
+        </span>
 
-                    👷 Add Contractor
-                </a>
+        <!-- LOGOUT -->
+        <a href="{% url 'logout' %}"
+           class="btn btn-outline-danger btn-sm">
 
-            </div>
+            Logout
+        </a>
+
+    {% else %}
+
+        <!-- GUEST -->
+        <a href="{% url 'login' %}"
+           class="btn btn-outline-primary btn-sm px-3">
+
+            Login
+        </a>
+
+        <a href="{% url 'register' %}"
+           class="btn btn-primary btn-sm px-3">
+
+            Register
+        </a>
+
+    {% endif %}
+
+</div>
 
         </div>
 
