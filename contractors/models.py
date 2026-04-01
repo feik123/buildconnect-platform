@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg
 from django.urls import reverse
 
 from common.models import TimeStampModel
@@ -39,8 +40,15 @@ class Contractor(TimeStampModel):
     def get_absolute_url(self):
         return reverse('contractors:detail', kwargs={'pk': self.pk})
 
+    @property
+    def average_rating(self):
+        return self.reviews.aggregate(avg=Avg('rating'))['avg']
+
     def __str__(self):
         return self.name
+
+
+
 
 
 

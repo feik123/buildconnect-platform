@@ -18,6 +18,11 @@
                 {{ contractor.city.name }}
             </p>
 
+            <p class="small text-muted mt-1">
+                ⭐ Average rating:
+                {{ contractor.average_rating|default:"No ratings yet" }}
+            </p>
+            
         </div>
 
 
@@ -120,8 +125,39 @@
         </div>
 
         {% endfor %}
-
-
+        
+    
+        {% if user.is_authenticated and not user.profile.is_contractor %}
+            <a href="{% url 'create' contractor.pk %}"
+               class="btn btn-sm btn-primary mt-2">
+        
+                Leave Review
+            </a>
+        {% endif %}
+    
+        <!-- REVIEWS -->
+        <h5 class="mt-4">Reviews</h5>
+        
+        {% for review in contractor.reviews.all %}
+            <div class="card mb-2 shadow-sm border-0">
+                <div class="card-body">
+        
+                    <strong>{{ review.user.username }}</strong>
+        
+                    <div>
+                        Rating: {{ review.rating }} / 5
+                    </div>
+        
+                    <p class="small text-muted">
+                        {{ review.comment }}
+                    </p>
+        
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">No reviews yet.</p>
+        {% endfor %}
+    
         <!-- BACK -->
         <div class="mt-4">
 
