@@ -46,7 +46,8 @@ PROJECT_APPS = [
     'accounts',
     'api',
     'reviews',
-    'notifications'
+    'notifications',
+    'rest_framework'
 ]
 
 INSTALLED_APPS = [
