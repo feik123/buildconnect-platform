@@ -4,6 +4,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from accounts.forms import RegisterForm
+from contractors.models import Contractor
+from jobs.models import City
 
 
 class RegisterView(CreateView):
@@ -13,6 +15,23 @@ class RegisterView(CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
+
+        user = self.object
+
+        if form.cleaned_data.get('is_contractor'):
+            if not Contractor.objects.filter(user=user).exists()
+
+                city = City.objects.first()
+                Contractor.objects.create(
+                    user=user,
+                    name=user.username,
+                    description='New contractor',
+                    city=city,
+                    years_experience=1,
+                )
+        user.profile.is_contractor = True
+        user.profile.save()
+
         login(self.request, self.object)
         return response
 

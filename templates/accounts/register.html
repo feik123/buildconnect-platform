@@ -1,12 +1,60 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-<h2>Register</h2>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-primary">Register</button>
-</form>
+<div class="row justify-content-center">
+    <div class="col-md-5">
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+
+                <h4 class="mb-3">Register</h4>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- USERNAME -->
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        {{ form.username }}
+                    </div>
+
+                    <!-- EMAIL -->
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        {{ form.email }}
+                    </div>
+
+                    <!-- PASSWORD -->
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        {{ form.password1 }}
+                    </div>
+
+                    <!-- CONFIRM PASSWORD -->
+                    <div class="mb-3">
+                        <label class="form-label">Confirm Password</label>
+                        {{ form.password2 }}
+                    </div>
+
+                    <!-- CONTRACTOR CHECKBOX -->
+                    <div class="form-check mb-3">
+                        {{ form.is_contractor }}
+                        <label class="form-check-label">
+                            I am a contractor (can apply for jobs)
+                        </label>
+                    </div>
+
+                    <button class="btn btn-primary w-100">
+                        Register
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
 
 {% endblock %}
