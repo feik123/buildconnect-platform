@@ -7,7 +7,7 @@ from applications.models import Application
 class ApplicationBaseForm(forms.ModelForm):
     class Meta:
         model = Application
-        fields = ['contractor', 'message', 'price_quote',]
+        fields = ['message', 'price_quote',]
 
         widgets = {
             'message': forms.Textarea(attrs={'rows': 4}),
@@ -18,8 +18,6 @@ class ApplicationBaseForm(forms.ModelForm):
 
         self.fields['price_quote'].help_text = 'Enter approximate budget in Euro.'
 
-        self.fields['contractor'].empty_label = 'Select contractor'
-
         self.fields['message'].widget.attrs['placeholder'] = 'Describe why you are suitable for this job...'
 
 
@@ -27,15 +25,14 @@ class ApplicationCreateForm(ApplicationBaseForm):
 
     def __init__(self, *args, **kwargs):
         self.job = kwargs.pop('job', None)
+        self.contractor = kwargs.pop('contractor', None)
         super().__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super().clean()
 
 
-        contractor = cleaned_data.get('contractor')
-
-        if not self.job or not contractor:
+        if not self.job or not self.contractor:
             return cleaned_data
 
         if not self.job.is_open():
@@ -43,7 +40,7 @@ class ApplicationCreateForm(ApplicationBaseForm):
 
         already_applied = Application.objects.filter(
             job=self.job,
-            contractor=contractor,
+            contractor=self.contractor,
         ).exists()
 
         if already_applied:

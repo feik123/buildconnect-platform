@@ -15,11 +15,18 @@ class ApplicationCreateView(CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.job = get_object_or_404(Job, pk=self.kwargs['pk'])
+
+        if not request.user.profile.is_contractor:
+            raise PermissionDenied('Only contractors can apply')
+
+        self.contractor = request.user.contractor
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['job'] = self.job
+        kwargs['contractor'] = self.contractor
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -29,6 +36,7 @@ class ApplicationCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.job = self.job
+        form.instance.contractor = self.contractor
         return super().form_valid(form)
 
 

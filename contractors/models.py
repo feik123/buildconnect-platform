@@ -1,3 +1,6 @@
+from tkinter.constants import CASCADE
+
+from django.conf import settings
 from django.db import models
 from django.db.models import Avg
 from django.urls import reverse
@@ -18,6 +21,14 @@ class Skill(models.Model):
 
 
 class Contractor(TimeStampModel):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='contractor',
+        null=True,
+        blank=True,
+    )
+
     name = models.CharField(
         max_length=100
     )
