@@ -1,4 +1,4 @@
-
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
@@ -32,6 +32,12 @@ class Category(models.Model):
 
 
 class Job(TimeStampModel):
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='jobs',
+    )
+
     class StatusChoices(models.TextChoices):
         OPEN = 'open', 'Open'
         CLOSE = 'closed', 'Closed'

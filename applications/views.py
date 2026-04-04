@@ -1,11 +1,11 @@
-
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from applications.forms import ApplicationCreateForm
 from applications.models import Application
 from jobs.models import Job
+from .tasks import notify_application_accepted
 
 
 class ApplicationCreateView(CreateView):
@@ -35,12 +35,20 @@ class ApplicationCreateView(CreateView):
 def accept_application(request, pk):
     application = get_object_or_404(Application, pk=pk)
 
+    if application.contractor != request.user:
+        raise PermissionDenied('Not allowed')
+
     application.status = Application.ApplicationChoices.ACCEPTED
-    application.save()
+    application.save(update_fields=['status'])
 
     job = application.job
     job.status = job.StatusChoices.CLOSE
     job.save()
+
+    notify_application_accepted.delay(
+        application.contractor.name,
+        job.title
+    )
 
     return redirect('jobs:detail', pk=job.pk)
 
