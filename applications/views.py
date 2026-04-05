@@ -43,7 +43,7 @@ class ApplicationCreateView(CreateView):
 def accept_application(request, pk):
     application = get_object_or_404(Application, pk=pk)
 
-    if application.contractor != request.user:
+    if application.job.owner != request.user:
         raise PermissionDenied('Not allowed')
 
     application.status = Application.ApplicationChoices.ACCEPTED

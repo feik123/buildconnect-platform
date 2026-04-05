@@ -1,3 +1,4 @@
+from unittest.mock import patch
 
 from django.test import TestCase
 from django.urls import reverse
@@ -63,3 +64,55 @@ class ApplicationTests(TestCase):
         self.assertEqual(response2.status_code, 200)
 
         self.assertEqual(Application.objects.count(), 1)
+
+    def test_non_owner_cannot_accept(self):
+        self.client.force_login(self.user)
+
+        application = Application.objects.create(
+            job=self.job,
+            contractor=self.contractor,
+            message='Test',
+            price_quote=100
+        )
+
+        url = reverse('applications:accept', kwargs={'pk': application.pk})
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 403)
+
+    def test_non_contractor_cannot_apply(self):
+        non_contractor = User.objects.create_user(
+            username='user2',
+            password='1234'
+        )
+
+        self.client.force_login(non_contractor)
+
+        url = reverse('applications:create', kwargs={'pk': self.job.pk})
+
+        response = self.client.post(url, {
+            'message': 'Test',
+            'price_quote': 100,
+        })
+
+        self.assertEqual(response.status_code, 403)
+
+    @patch('applications.views.notify_application_accepted.delay')
+    def test_async_called(self, mock_task):
+        self.client.login(username='owner', password='1234')
+
+        application = Application.objects.create(
+            job=self.job,
+            contractor=self.contractor,
+            message='Test',
+            price_quote=100
+        )
+
+        url = reverse('applications:accept', kwargs={'pk': application.pk})
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 302)
+
+        mock_task.assert_called_once()
