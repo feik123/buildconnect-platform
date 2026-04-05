@@ -19,7 +19,7 @@ class RegisterView(CreateView):
         user = self.object
 
         if form.cleaned_data.get('is_contractor'):
-            if not Contractor.objects.filter(user=user).exists()
+            if not Contractor.objects.filter(user=user).exists():
 
                 city = City.objects.first()
                 Contractor.objects.create(
