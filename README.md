@@ -14,7 +14,7 @@ The main goal of this project is to provide a simple and user-friendly platform 
 - Contractors can browse available jobs and apply for them.
 - Applications can be reviewed, accepted, or rejected.
 
-This project is developed as part of the Django Basics course at SoftUni.
+This project is developed as part of the Django Advanced course at SoftUni.
 
 ---
 
@@ -25,6 +25,8 @@ This project is developed as part of the Django Basics course at SoftUni.
 - PostgreSQL
 - Bootstrap 5
 - HTML5 / CSS3
+- Django REST Framework
+- Celery
 
 ---
 
@@ -92,7 +94,7 @@ The project includes multiple customized forms with:
 - Administrators can easily manage required data through: /admin
 - This ensures that Jobs and Contractors can always be created.
 
-## 📸 Screenshots
+##   Screenshots
 
 ### Home Page
 ![Home](screenshots/home_page.bmp)
@@ -116,7 +118,7 @@ The project includes multiple customized forms with:
 ![Apply](screenshots/job_apply.bmp)
 
 
-## 🚀 Installation & Setup
+##  Installation & Setup
 
 Follow these steps to run the project locally:
 
@@ -168,3 +170,54 @@ DB_PORT=5432
 
 If PostgreSQL credentials are not provided,
 the application can use SQLite.
+
+---
+
+## Tests
+
+Run the automated test suite:
+
+```bash
+python manage.py test
+```
+
+The project includes tests covering:
+
+* User authentication (register/login)
+* Job creation and ownership
+* Application logic (apply, duplicate prevention)
+* Permissions (contractor vs homeowner)
+* Async task execution (mocked Celery)
+
+---
+
+## Async Processing
+
+The project uses **Celery** for background task processing.
+
+When a job application is accepted:
+
+* An async notification task is triggered
+
+For testing purposes, Celery tasks are mocked using `unittest.mock`.
+
+---
+
+## API (Django REST Framework)
+
+Available endpoints:
+
+* `/api/jobs/` – List all jobs
+* `/api/contractors/` – List contractors
+
+---
+
+## Advanced Features
+
+* Role-based access (Homeowner vs Contractor)
+* Automatic Contractor profile creation on registration
+* Secure application system (no duplicate applications)
+* Owner-based permissions for accepting applications
+* Use of `get_user_model()` for flexibility
+* Async background processing with Celery
+* Clean separation into Django apps

@@ -8,6 +8,10 @@ from jobs.models import Job
 
 class JobTests(TestCase):
 
+    def test_job_create_requires_login(self):
+        response = self.client.get(reverse('jobs:create'))
+        self.assertEqual(response.status_code, 302)
+
     def test_create_job_sets_owner(self):
         user = create_user()
         self.client.login(username='testuser', password='1234')
