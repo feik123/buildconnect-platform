@@ -73,7 +73,8 @@
 
         <!-- ACTIONS -->
         <div class="mb-4 d-flex gap-2">
-
+            
+            {% if user == contractor.user %}
             <a href="{% url 'contractors:edit' contractor.pk %}"
                class="btn btn-outline-secondary btn-sm">
 
@@ -85,6 +86,8 @@
 
                 Delete
             </a>
+            {% endif %}
+            
 
         </div>
 

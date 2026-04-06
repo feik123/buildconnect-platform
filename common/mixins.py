@@ -10,10 +10,13 @@ class DisableFormFieldsMixin:
 
 
 class OwnerRequiredMixin:
+    owner_field = 'user'
+
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
 
-        if obj.user != request.user:
+        owner = getattr(obj, self.owner_field)
+        if owner != request.user:
             raise PermissionDenied('Not allowed')
 
         return super().dispatch(request, *args, **kwargs)

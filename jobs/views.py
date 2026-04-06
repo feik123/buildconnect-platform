@@ -51,6 +51,7 @@ class JobDetailView(DetailView):
         queryset = super().get_queryset()
 
         return queryset.select_related(
+            'owner',
             'city',
             'category'
         ).prefetch_related(
@@ -70,6 +71,9 @@ class JobUpdateView(OwnerRequiredMixin, UpdateView):
     template_name = 'jobs/job_edit.html'
     success_url = reverse_lazy('jobs:list')
 
+    owner_field = 'owner'
+    def get_queryset(self):
+        return Job.objects.filter(owner=self.request.user)
 
 class JobDeleteView(OwnerRequiredMixin, DeleteView):
     model = Job
@@ -77,6 +81,10 @@ class JobDeleteView(OwnerRequiredMixin, DeleteView):
     context_object_name = 'job'
     template_name = 'jobs/job_delete.html'
     success_url = reverse_lazy('jobs:list')
+
+    owner_field = 'owner'
+    def get_queryset(self):
+        return Job.objects.filter(owner=self.request.user)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
