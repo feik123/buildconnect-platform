@@ -1,9 +1,8 @@
-from audioop import reverse
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from django.views.generic import CreateView
 
 from contractors.models import Contractor
@@ -17,12 +16,16 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
     template_name = 'reviews/review_create.html'
 
     def dispatch(self, request, *args, **kwargs):
+
         self.contractor = get_object_or_404(
             Contractor, pk=self.kwargs['pk']
         )
 
         if request.user.profile.is_contractor:
             raise PermissionDenied('Contractors cannot leave reviews')
+
+        print(request.user.profile.is_contractor)
+
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -35,3 +38,10 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
             'contractors:detail',
             kwargs={'pk': self.contractor.pk}
         )
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['contractor'] = self.contractor
+        kwargs['user'] = self.request.user
+        return kwargs
+

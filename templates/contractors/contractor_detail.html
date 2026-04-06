@@ -21,6 +21,11 @@
             <p class="small text-muted mt-1">
                 ⭐ Average rating:
                 {{ contractor.average_rating|default:"No ratings yet" }}
+                {% if user.is_authenticated and user != contractor.user %}
+                <a href="{% url 'reviews:create' contractor.pk %}">
+                    Leave a review
+    </a>
+{% endif %}
             </p>
             
         </div>
@@ -128,7 +133,7 @@
         
     
         {% if user.is_authenticated and not user.profile.is_contractor %}
-            <a href="{% url 'create' contractor.pk %}"
+            <a href="{% url 'reviews:create' contractor.pk %}"
                class="btn btn-sm btn-primary mt-2">
         
                 Leave Review

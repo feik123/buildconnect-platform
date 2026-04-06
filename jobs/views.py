@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
+from common.mixins import OwnerRequiredMixin
 from jobs.forms import JobCreateForm, JobDeleteForm, JobEditForm
 from jobs.models import Job
 
@@ -63,14 +64,14 @@ class JobDetailView(DetailView):
 
         return context
 
-class JobUpdateView(UpdateView):
+class JobUpdateView(OwnerRequiredMixin, UpdateView):
     model = Job
     form_class = JobEditForm
     template_name = 'jobs/job_edit.html'
     success_url = reverse_lazy('jobs:list')
 
 
-class JobDeleteView(DeleteView):
+class JobDeleteView(OwnerRequiredMixin, DeleteView):
     model = Job
     form_class = JobDeleteForm
     context_object_name = 'job'

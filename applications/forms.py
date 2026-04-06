@@ -1,5 +1,6 @@
 from django import forms
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, PermissionDenied
+from django.template.context_processors import request
 
 from applications.models import Application
 
@@ -26,6 +27,7 @@ class ApplicationCreateForm(ApplicationBaseForm):
     def __init__(self, *args, **kwargs):
         self.job = kwargs.pop('job', None)
         self.contractor = kwargs.pop('contractor', None)
+        self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
     def clean(self):
@@ -45,6 +47,9 @@ class ApplicationCreateForm(ApplicationBaseForm):
 
         if already_applied:
             raise ValidationError('You have already applied for this job.')
+
+        if self.job.owner == self.user:
+            raise ValidationError('You cannot apply to your own job')
 
         return cleaned_data
 

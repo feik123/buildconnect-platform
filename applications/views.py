@@ -27,6 +27,7 @@ class ApplicationCreateView(CreateView):
         kwargs = super().get_form_kwargs()
         kwargs['job'] = self.job
         kwargs['contractor'] = self.contractor
+        kwargs['user'] = self.request.user
         return kwargs
 
     def get_context_data(self, **kwargs):

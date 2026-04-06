@@ -20,8 +20,8 @@ class RegisterView(CreateView):
 
         if form.cleaned_data.get('is_contractor'):
             if not Contractor.objects.filter(user=user).exists():
-
                 city = City.objects.first()
+
                 Contractor.objects.create(
                     user=user,
                     name=user.username,
@@ -29,12 +29,16 @@ class RegisterView(CreateView):
                     city=city,
                     years_experience=1,
                 )
-        user.profile.is_contractor = True
+
+            user.profile.is_contractor = True
+
+        else:
+            user.profile.is_contractor = False
+
         user.profile.save()
 
         login(self.request, self.object)
         return response
-
 class UserLoginView(LoginView):
     template_name = 'accounts/login.html'
 

@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from common.mixins import OwnerRequiredMixin
 from contractors.forms import ContractorCreateForm, ContractorEditForm, ContractorDeleteForm
 from contractors.models import Contractor
 
@@ -31,7 +32,7 @@ class ContractorCreateView(CreateView):
     form_class = ContractorCreateForm
 
 
-class ContractorUpdateView(UpdateView):
+class ContractorUpdateView(OwnerRequiredMixin, UpdateView):
     model = Contractor
     form_class = ContractorEditForm
     template_name = 'contractors/contractor_edit.html'
@@ -43,7 +44,7 @@ class ContractorUpdateView(UpdateView):
         return super().get_queryset().select_related('city').prefetch_related('skills')
 
 
-class ContractorDeleteView(DeleteView):
+class ContractorDeleteView(OwnerRequiredMixin, DeleteView):
     model = Contractor
     form_class = ContractorDeleteForm
     template_name = 'contractors/contractor_delete.html'
