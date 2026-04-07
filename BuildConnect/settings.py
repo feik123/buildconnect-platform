@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+import dj_database_url
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -100,14 +101,10 @@ DATABASE_URL = os.getenv('DB_NAME')
 if DATABASE_URL:
 
     DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv('DB_NAME'),
-            "USER": os.getenv('DB_USER'),
-            "PASSWORD": os.getenv('DB_PASSWORD'),
-            "HOST": os.getenv('DB_HOST', 'localhost'),
-            "PORT": os.getenv('DB_PORT', '5432'),
-        }
+        'default': dj_database_url.parse(
+            os.environ.get('DATABASE_URL'),
+            default='postgres://postgres:postgres@localhost:5432/buldconnectdb'
+        )
     }
 
 else:
