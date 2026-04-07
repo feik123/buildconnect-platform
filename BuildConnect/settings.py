@@ -99,9 +99,7 @@ WSGI_APPLICATION = 'BuildConnect.wsgi.application'
 DATABASE_URL = os.getenv('DB_NAME')
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://postgres:postgres@localhost:5432/buildconnectdb'
-    )
+    'default': dj_database_url.config()
 }
 
 # Password validation
