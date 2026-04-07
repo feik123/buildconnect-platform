@@ -38,6 +38,7 @@ The project consists of the following Django apps:
 - **contractors** – Handles contractor profiles and skills.
 - **applications** – Manages job applications.
 - **common** – Contains shared models and utilities.
+- **reviews** – Handles contractor reviews and ratings.
 
 ---
 
@@ -51,6 +52,7 @@ Main models used in the project:
 - City
 - Category
 - Skill
+- Review
 
 ### Relationships
 
@@ -58,6 +60,9 @@ Main models used in the project:
 - Many-to-Many: Contractor ↔ Skill
 - One-to-Many: Job → Application
 - One-to-Many: Contractor → Application
+- One-to-Many: User → Job (owner)
+- One-to-Many: User → Review
+- One-to-Many: Contractor → Review
 
 ---
 
@@ -72,6 +77,9 @@ Main models used in the project:
 - Custom 404 error page
 - Responsive UI with Bootstrap
 - Pagination
+- Role-based access control
+- Review system for contractors
+- Prevention of unauthorized actions
 
 ---
 
@@ -88,34 +96,24 @@ The project includes multiple customized forms with:
 
 ---
 
+---
+
+##  Security & Roles
+
+- Role-based system (Client / Contractor)
+- Ownership-based permissions (users can edit/delete only their own data)
+- Protection against:
+  - Duplicate applications
+  - Duplicate reviews
+  - Applying to own job
+- Queryset filtering to prevent unauthorized access
+
+---
 ## Admin Configuration
 
 - Reference models such as **Category**, **City**, and **Skill** are registered in the Django admin panel.
 - Administrators can easily manage required data through: /admin
 - This ensures that Jobs and Contractors can always be created.
-
-##   Screenshots
-
-### Home Page
-![Home](screenshots/home_page.bmp)
-
-### Job Listings
-![Jobs](screenshots/job_list.bmp)
-
-### Job Detail
-![Job Detail](screenshots/job_detail.bmp)
-
-### Contractors
-![Contractors](screenshots/contractor_list.bmp)
-
-### Contractor Profile
-![Contractor Detail](screenshots/contractor_detail.bmp)
-
-### Create Job
-![Create Job](screenshots/job_create.bmp)
-
-### Apply for Job
-![Apply](screenshots/job_apply.bmp)
 
 
 ##  Installation & Setup
@@ -207,8 +205,10 @@ For testing purposes, Celery tasks are mocked using `unittest.mock`.
 
 Available endpoints:
 
-* `/api/jobs/` – List all jobs
-* `/api/contractors/` – List contractors
+* GET `/api/jobs/` – List all jobs
+* GET `/api/jobs/<id>/` → Job details
+* POST `/api/jobs/create/` → Create job (auth required)
+* GET `/api/jobs/my/` → Current user's jobs
 
 ---
 
