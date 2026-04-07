@@ -116,3 +116,16 @@ class ApplicationTests(TestCase):
         self.assertEqual(response.status_code, 302)
 
         mock_task.assert_called_once()
+
+    def test_cannot_apply_to_own_job(self):
+        self.client.login(username='owner', password='1234')
+
+        url = reverse('applications:create', kwargs={'pk': self.job.pk})
+
+        response = self.client.post(url, {
+            'message': 'Test',
+            'price_quote': 100,
+        })
+
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(Application.objects.count(), 0)
