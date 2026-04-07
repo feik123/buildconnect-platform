@@ -54,7 +54,7 @@ def accept_application(request, pk):
     job.status = job.StatusChoices.CLOSE
     job.save()
 
-    notify_application_accepted.delay(
+    notify_application_accepted(
         application.contractor.name,
         job.title
     )

@@ -1,0 +1,67 @@
+/* =========================
+   Global Layout
+   ========================= */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Container width */
+.page-container {
+    max-width: 1200px;
+}
+
+/* Cards */
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.card:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 8px;
+}
+
+/* Footer */
+footer {
+    background-color: #ffffff;
+}
+
+/* =========================
+   Forms Styling
+   ========================= */
+
+form label {
+    font-weight: 400;
+}
+
+form input,
+form select,
+form textarea {
+    border-radius: 5px;
+}
+
+form textarea {
+    resize: vertical;
+}
+
+/* Home hero */
+.card-body.text-center {
+    background: linear-gradient(
+        to bottom,
+        #ffffff,
+        #f8f9fa
+    );
+}
