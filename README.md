@@ -1,5 +1,6 @@
-#  BuildConnect – Contractor & Homeowner Platform
+# Deployed Poject - https://buildconnect-platform.onrender.com/
 
+#  BuildConnect – Contractor & Homeowner Platform
 BuildConnect is a Django-based web application that connects homeowners with professional contractors for renovation and construction projects.
 
 Homeowners can post jobs, and contractors can apply with price offers and personal messages.
