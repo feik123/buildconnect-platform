@@ -40,6 +40,14 @@ class ApplicationCreateForm(ApplicationBaseForm):
         if not self.job.is_open():
             raise ValidationError('Cannot apply to a closed job.')
 
+        accepted_exists = Application.objects.filter(
+            job=self.job,
+            status=Application.ApplicationChoices.ACCEPTED
+        ).exists()
+
+        if accepted_exists:
+            raise ValidationError('This job already has an accepted contractor.')
+
         already_applied = Application.objects.filter(
             job=self.job,
             contractor=self.contractor,

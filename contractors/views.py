@@ -41,7 +41,7 @@ class ContractorUpdateView(OwnerRequiredMixin, UpdateView):
         return reverse_lazy('contractors:detail', kwargs={'pk': self.object.pk})
 
     def get_queryset(self):
-        return super().get_queryset().select_related('city').prefetch_related('skills')
+        return super().get_queryset().filter(user=self.request.user).select_related('city').prefetch_related('skills')
 
 
 class ContractorDeleteView(OwnerRequiredMixin, DeleteView):

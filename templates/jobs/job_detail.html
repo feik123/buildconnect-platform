@@ -77,7 +77,7 @@
                 Delete
             </a>
         {% endif %}
-            {% if job.is_open %}
+            {% if job.is_open and user.profile.is_contractor%}
 
                 <a href="{% url 'applications:create' job.pk %}"
                    class="btn btn-primary btn-sm ms-sm">
@@ -140,23 +140,24 @@
 
                 <!-- ACTIONS -->
                 {% if application.status == "pending" and job.is_open %}
-
-                <div>
-
-                    <a href="{% url 'applications:accept' application.pk %}"
-                       class="btn btn-success btn-sm me-2">
-
-                        ✔ Accept
-                    </a>
-
-                    <a href="{% url 'applications:reject' application.pk %}"
-                       class="btn btn-danger btn-sm">
-
-                        ✖ Reject
-                    </a>
-
-                </div>
-
+                {% if user == job.owner %}
+                
+                    <div>
+    
+                        <a href="{% url 'applications:accept' application.pk %}"
+                           class="btn btn-success btn-sm me-2">
+    
+                            ✔ Accept
+                        </a>
+    
+                        <a href="{% url 'applications:reject' application.pk %}"
+                           class="btn btn-danger btn-sm">
+    
+                            ✖ Reject
+                        </a>
+    
+                    </div>
+                {% endif %}
                 {% else %}
 
                 <span class="small text-muted">
